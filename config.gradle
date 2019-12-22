@@ -8,7 +8,7 @@ ext {
      * false : 组件化(子模块可以独立运行)
      * true : 集成化 (打包整个项目apk,子模块不可独立运行)
      */
-    isRelease = false
+    isRelease = true
 
 
     // 建立Map 存储,对象名 key 都可以自定义

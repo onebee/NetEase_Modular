@@ -1,7 +1,9 @@
 package com.one.netease.personal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
@@ -15,4 +17,21 @@ public class Personal_MainActivity extends BaseActivity {
         setContentView(R.layout.personal_activity_main);
         Log.i(Cons.TAG,"order >> Personal_main_activity");
     }
+
+
+    public void jumpApp(View view) throws ClassNotFoundException {
+        Class targetClass = Class.forName("com.one.netease.modular.MainActivity");
+        Intent intent = new Intent(this, targetClass);
+        intent.putExtra("name","onebit");
+        startActivity(intent);
+    }
+
+    public void jumpOrder(View view) throws ClassNotFoundException {
+
+        Class targetClass = Class.forName("com.one.netease.order.Order_MainActivity");
+        Intent intent = new Intent(this, targetClass);
+        intent.putExtra("name","onebit");
+        startActivity(intent);
+    }
+
 }
