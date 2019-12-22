@@ -2,6 +2,8 @@ package com.one.netease.order;
 
 import android.content.Context;
 
+import com.one.netease.order.debug.Test;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 

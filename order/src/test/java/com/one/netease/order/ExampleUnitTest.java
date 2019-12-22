@@ -1,5 +1,7 @@
 package com.one.netease.order;
 
+import com.one.netease.order.debug.Test;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
