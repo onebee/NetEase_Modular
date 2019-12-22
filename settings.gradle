@@ -1,2 +1,2 @@
-include ':app', ':order', ':personal'
+include ':app', ':order', ':personal', ':common'
 rootProject.name='NetEase_Modular'

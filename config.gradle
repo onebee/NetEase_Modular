@@ -27,7 +27,7 @@ ext {
     ]
 
     appId = [
-            " app "   : "com.one.netease.module",
+            "app"   : "com.one.netease.module",
             "order"   : "com.one.netease.module.order",
             "personal": "com.one.netease.module.personal"
     ]
