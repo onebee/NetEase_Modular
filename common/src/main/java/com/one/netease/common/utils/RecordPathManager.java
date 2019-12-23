@@ -13,7 +13,7 @@ import java.util.Map;
 public class RecordPathManager {
 
     /**
-     * //key:"order"组，value：order子模块所有activity的路劲信息
+     *key:"order"组，value：order子模块所有activity的路劲信息
      */
     private static Map<String, List<Pathbean>> groupMap = new HashMap<>();
 
@@ -32,9 +32,13 @@ public class RecordPathManager {
             list.add(new Pathbean(pathName, clazz));
             groupMap.put(groupName, list);
         } else {
-            groupMap.put(groupName, list);
+            for (Pathbean pathbean : list) {
+                if (!pathName.equals(pathbean.getPath())) {
+                    list.add(new Pathbean(pathName,clazz));
+                    groupMap.put(groupName, list);
+                }
+            }
         }
-        groupMap.put(groupName, list);
     }
 
     /**
