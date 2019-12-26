@@ -1,13 +1,11 @@
 package com.one.netease.order;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
-import com.one.netease.common.utils.RecordPathManager;
 
 public class Order_MainActivity extends BaseActivity {
 
@@ -25,13 +23,13 @@ public class Order_MainActivity extends BaseActivity {
 //        intent.putExtra("name","onebit");
 //        startActivity(intent);
 
-        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
-        if (targetClass == null) {
-            Log.e(Cons.TAG,"targetClass 为空");
-        }
-        Intent intent = new Intent(this, targetClass);
-        intent.putExtra("name","onebit");
-        startActivity(intent);
+//        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
+//        if (targetClass == null) {
+//            Log.e(Cons.TAG,"targetClass 为空");
+//        }
+//        Intent intent = new Intent(this, targetClass);
+//        intent.putExtra("name","onebit");
+//        startActivity(intent);
     }
 
     public void jumpPersonal(View view) throws ClassNotFoundException {
@@ -41,12 +39,12 @@ public class Order_MainActivity extends BaseActivity {
 //        intent.putExtra("name","onebit");
 //        startActivity(intent);
 
-        Class<?> targetClass = RecordPathManager.getTargetClass("personal", "Personal_MainActivity");
-        if (targetClass == null) {
-            Log.e(Cons.TAG,"targetClass 为空");
-        }
-        Intent intent = new Intent(this, targetClass);
-        intent.putExtra("name","onebit");
-        startActivity(intent);
+//        Class<?> targetClass = RecordPathManager.getTargetClass("personal", "Personal_MainActivity");
+//        if (targetClass == null) {
+//            Log.e(Cons.TAG,"targetClass 为空");
+//        }
+//        Intent intent = new Intent(this, targetClass);
+//        intent.putExtra("name","onebit");
+//        startActivity(intent);
     }
 }

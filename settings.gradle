@@ -1,2 +1,2 @@
-include ':app', ':order', ':personal', ':common'
+include ':app', ':order', ':personal', ':common', ':arouter_annotation', ':arouter_complier', ':arouter_api'
 rootProject.name='NetEase_Modular'

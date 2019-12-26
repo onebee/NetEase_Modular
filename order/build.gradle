@@ -69,5 +69,5 @@ dependencies {
         implementation v
     }
     implementation project(':common') // 公共基础库
-
+    implementation project(':arouter_annotation')
 }

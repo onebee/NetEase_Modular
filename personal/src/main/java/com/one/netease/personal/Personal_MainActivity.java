@@ -1,13 +1,11 @@
 package com.one.netease.personal;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
-import com.one.netease.common.utils.RecordPathManager;
 import com.one.netease.order.R;
 
 public class Personal_MainActivity extends BaseActivity {
@@ -25,13 +23,13 @@ public class Personal_MainActivity extends BaseActivity {
 //        Intent intent = new Intent(this, targetClass);
 //        intent.putExtra("name","onebit");
 //        startActivity(intent);
-        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
-        if (targetClass == null) {
-            Log.e(Cons.TAG,"targetClass 为空");
-        }
-        Intent intent = new Intent(this, targetClass);
-        intent.putExtra("name","onebit");
-        startActivity(intent);
+//        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
+//        if (targetClass == null) {
+//            Log.e(Cons.TAG,"targetClass 为空");
+//        }
+//        Intent intent = new Intent(this, targetClass);
+//        intent.putExtra("name","onebit");
+//        startActivity(intent);
 
     }
 
@@ -42,13 +40,13 @@ public class Personal_MainActivity extends BaseActivity {
 //        intent.putExtra("name","onebit");
 //        startActivity(intent);
 
-        Class<?> targetClass = RecordPathManager.getTargetClass("order", "Order_MainActivity");
-        if (targetClass == null) {
-            Log.e(Cons.TAG,"targetClass 为空");
-        }
-        Intent intent = new Intent(this, targetClass);
-        intent.putExtra("name","onebit");
-        startActivity(intent);
+//        Class<?> targetClass = RecordPathManager.getTargetClass("order", "Order_MainActivity");
+//        if (targetClass == null) {
+//            Log.e(Cons.TAG,"targetClass 为空");
+//        }
+//        Intent intent = new Intent(this, targetClass);
+//        intent.putExtra("name","onebit");
+//        startActivity(intent);
     }
 
 }
