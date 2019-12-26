@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.one.netease.annotation.ARouter;
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
-
+@ARouter(path = "order/Order_MainActivity")
 public class Order_MainActivity extends BaseActivity {
 
     @Override
@@ -14,6 +15,11 @@ public class Order_MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity_main);
         Log.i(Cons.TAG,"order >> Order_main_activity");
+
+        if (getIntent() != null) {
+
+            Log.e(Cons.TAG, getIntent().getStringExtra("name"));
+        }
     }
 
     public void jumpApp(View view) throws ClassNotFoundException {

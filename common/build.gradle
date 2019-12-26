@@ -36,4 +36,7 @@ dependencies {
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // 每个模块都要用到arouter_api 对外提供的接口(组,路径) app/order/personal 都依赖common公共基础库
+    api project(':arouter_api')// 这些接口同样对所有业务子模块开放
 }
