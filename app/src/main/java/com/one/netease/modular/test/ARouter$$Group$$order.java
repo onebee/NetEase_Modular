@@ -18,13 +18,6 @@ public class ARouter$$Group$$order implements ARouterLoadGroup {
         Map<String, Class<? extends ARouterLoadPath>> groupMap = new HashMap<>();
         groupMap.put("order",ARouter$$Path$$order.class);
 
-
-
-
-
-
-
-
         return groupMap;
     }
 }

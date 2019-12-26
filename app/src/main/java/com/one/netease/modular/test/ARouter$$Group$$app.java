@@ -17,8 +17,6 @@ public class ARouter$$Group$$app implements ARouterLoadGroup {
 
         Map<String, Class<? extends ARouterLoadPath>> groupMap = new HashMap<>();
         groupMap.put("app",ARouter$$Path$$app.class);
-
-
         return groupMap;
     }
 }
