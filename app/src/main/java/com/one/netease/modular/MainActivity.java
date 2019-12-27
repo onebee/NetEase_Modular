@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.one.netease.annotation.ARouter;
 import com.one.netease.annotation.model.RouterBean;
-import com.one.netease.api.ARouterLoadGroup;
-import com.one.netease.api.ARouterLoadPath;
+import com.one.netease.core.ARouterLoadGroup;
+import com.one.netease.core.ARouterLoadPath;
 import com.one.netease.modular.test.ARouter$$Group$$order;
 import com.one.netease.modular.test.ARouter$$Group$$personal;
 

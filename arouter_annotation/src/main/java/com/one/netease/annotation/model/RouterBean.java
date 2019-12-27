@@ -114,4 +114,12 @@ public class RouterBean {
         }
 
     }
+
+    @Override
+    public String toString() {
+        return "RouterBean{" +
+                "group='" + group + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

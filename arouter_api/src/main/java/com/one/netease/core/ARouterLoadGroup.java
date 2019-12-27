@@ -1,4 +1,4 @@
-package com.one.netease.api;
+package com.one.netease.core;
 
 import java.util.Map;
 

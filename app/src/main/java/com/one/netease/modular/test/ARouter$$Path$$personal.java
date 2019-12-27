@@ -1,7 +1,7 @@
 package com.one.netease.modular.test;
 
 import com.one.netease.annotation.model.RouterBean;
-import com.one.netease.api.ARouterLoadPath;
+import com.one.netease.core.ARouterLoadPath;
 import com.one.netease.personal.Personal_MainActivity;
 
 import java.util.HashMap;
