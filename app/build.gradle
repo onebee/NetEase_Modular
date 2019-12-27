@@ -24,6 +24,13 @@ android {
 
 
         multiDexEnabled true
+
+        // 在gradle 文件中配置选项参数值,用于APT传参接收,必须写在defaultConfig 下面
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName(), packageNameForAPT: packageNameForAPT]
+            }
+        }
     }
     buildTypes {
         release {
