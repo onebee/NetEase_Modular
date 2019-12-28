@@ -1,4 +1,4 @@
-package com.one.netease.core;
+package com.one.netease.arouter.api.core;
 
 import java.util.Map;
 

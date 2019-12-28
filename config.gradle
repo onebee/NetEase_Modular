@@ -12,7 +12,7 @@ ext {
 
 
     // 包名，用于存放APT生成的类文件
-    packageNameForAPT = "com.onebit.netease.modular.apt"
+    packageNameForAPT = "com.one.netease.modular.apt"
 
 
     // 建立Map 存储,对象名 key 都可以自定义

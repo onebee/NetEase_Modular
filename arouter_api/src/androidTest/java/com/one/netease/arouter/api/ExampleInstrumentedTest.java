@@ -1,4 +1,4 @@
-package com.one.netease.api;
+package com.one.netease.arouter.api;
 
 import android.content.Context;
 

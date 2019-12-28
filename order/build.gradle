@@ -77,4 +77,7 @@ dependencies {
     }
     implementation project(':common') // 公共基础库
     implementation project(':arouter_annotation')
+    annotationProcessor project(':arouter_complier')
+
+
 }

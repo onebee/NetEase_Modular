@@ -5,7 +5,15 @@ import com.one.netease.annotation.ARouter;
 import com.one.netease.annotation.model.RouterBean;
 import com.one.netease.complier.utils.Constants;
 import com.one.netease.complier.utils.EmptyUtils;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.WildcardTypeName;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +31,7 @@ import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
@@ -61,7 +70,7 @@ public class ARouterProcessor extends AbstractProcessor {
 
     // 临时map存储，用来存放路由组Group对应的详细Path类对象，生成路由路径类文件时遍历
     // key:组名"app", value:"app"组的路由路径"ARouter$$Path$$app.class"
-    private Map<String , List<RouterBean>> tempPathMap = new HashMap<>();
+    private Map<String, List<RouterBean>> tempPathMap = new HashMap<>();
 
 
     // 临时map存储，用来存放路由Group信息，生成路由组类文件时遍历
@@ -110,13 +119,19 @@ public class ARouterProcessor extends AbstractProcessor {
         if (!EmptyUtils.isEmpty(set)) {
             Set<? extends Element> elements = environment.getElementsAnnotatedWith(ARouter.class);
             if (!EmptyUtils.isEmpty(elements)) {
-                parseElements(elements);
+                try {
+                    parseElements(elements);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
+            return true;
         }
-        return true;
+        return false;
     }
 
-    private void parseElements(Set<? extends Element> elements) {
+    private void parseElements(Set<? extends Element> elements) throws IOException {
 
         // 获取Activity Call back 类型
         TypeElement activityType = elementUtils.getTypeElement(Constants.ACTIVITY);
@@ -151,27 +166,145 @@ public class ARouterProcessor extends AbstractProcessor {
 
         // ARouterLoadGroup 和ARouterLoadPath 用来重新生成类文件,实现接口
 
-        TypeElement groudLoadType = elementUtils.getTypeElement(Constants.AROUTE_GROUP);
+        TypeElement groundLoadType = elementUtils.getTypeElement(Constants.AROUTE_GROUP);
         TypeElement pathLoadType = elementUtils.getTypeElement(Constants.AROUTE_PATH);
 
         // 1. 生成 路由的详细Path 类文件, 如ARouter$$Path$$app
         createPathFile(pathLoadType);
 
         // 2. 生成 路由组 Group 类文件
-        createGroupFile(groudLoadType,pathLoadType);
+        createGroupFile(groundLoadType, pathLoadType);
 
     }
 
-    private void createGroupFile(TypeElement groupType, TypeElement pathType) {
+    private void createGroupFile(TypeElement groupLoadType, TypeElement pathLoadType) throws IOException {
 
+        // 判断是否有需要生成的类文件
+        if (EmptyUtils.isEmpty(tempGroupMap) || EmptyUtils.isEmpty(tempPathMap)) return;
+
+        TypeName methodReturns = ParameterizedTypeName.get(
+                ClassName.get(Map.class), // Map
+                ClassName.get(String.class), // Map<String,
+                // 第二个参数：Class<? extends ARouterLoadPath>
+                // 某某Class是否属于ARouterLoadPath接口的实现类
+                ParameterizedTypeName.get(ClassName.get(Class.class),
+                        WildcardTypeName.subtypeOf(ClassName.get(pathLoadType)))
+        );
+
+        // 方法配置：public Map<String, Class<? extends ARouterLoadPath>> loadGroup() {
+        MethodSpec.Builder methodBuidler = MethodSpec.methodBuilder(Constants.GROUP_METHOD_NAME) // 方法名
+                .addAnnotation(Override.class) // 重写注解
+                .addModifiers(Modifier.PUBLIC) // public修饰符
+                .returns(methodReturns); // 方法返回值
+
+        // 遍历之前：Map<String, Class<? extends ARouterLoadPath>> groupMap = new HashMap<>();
+        methodBuidler.addStatement("$T<$T, $T> $N = new $T<>()",
+                ClassName.get(Map.class),
+                ClassName.get(String.class),
+                ParameterizedTypeName.get(ClassName.get(Class.class),
+                        WildcardTypeName.subtypeOf(ClassName.get(pathLoadType))),
+                Constants.GROUP_PARAMETER_NAME,
+                HashMap.class);
+
+        // 方法内容配置
+        for (Map.Entry<String, String> entry : tempGroupMap.entrySet()) {
+            // 类似String.format("hello %s net163 %d", "net", 163)通配符
+            // groupMap.put("main", ARouter$$Path$$app.class);
+            methodBuidler.addStatement("$N.put($S, $T.class)",
+                    Constants.GROUP_PARAMETER_NAME, // groupMap.put
+                    entry.getKey(),
+                    // 类文件在指定包名下
+                    ClassName.get(packageNameForAPT, entry.getValue()));
+        }
+
+        // 遍历之后：return groupMap;
+        methodBuidler.addStatement("return $N", Constants.GROUP_PARAMETER_NAME);
+
+        // 最终生成的类文件名
+        String finalClassName = Constants.GROUP_FILE_NAME + moduleName;
+        messager.printMessage(Diagnostic.Kind.NOTE, "APT生成路由组Group类文件：" +
+                packageNameForAPT + "." + finalClassName);
+
+        // 生成类文件：ARouter$$Group$$app
+        JavaFile.builder(packageNameForAPT, // 包名
+                TypeSpec.classBuilder(finalClassName) // 类名
+                        .addSuperinterface(ClassName.get(groupLoadType)) // 实现ARouterLoadGroup接口
+                        .addModifiers(Modifier.PUBLIC) // public修饰符
+                        .addMethod(methodBuidler.build()) // 方法的构建（方法参数 + 方法体）
+                        .build()) // 类构建完成
+                .build() // JavaFile构建完成
+                .writeTo(filer); // 文件生成器开始生成类文件
 
     }
 
-    private void createPathFile(TypeElement pathType) {
-        if (EmptyUtils.isEmpty(tempPathMap))return;
-
+    private void createPathFile(TypeElement pathLoadType) throws IOException {
+        if (EmptyUtils.isEmpty(tempPathMap)) return;
 
         // 方法的返回值 Map<String, RouterBean>
+        TypeName methodReturns = ParameterizedTypeName.get(
+                ClassName.get(Map.class),
+                ClassName.get(String.class),
+                ClassName.get(RouterBean.class));
+        // 遍历分组,每一个分组创建一个路径文件 如: ARouter$$Path$$order
+        for (Map.Entry<String, List<RouterBean>> entry : tempPathMap.entrySet()) {
+
+            //  方法的构造 public Map<String, RouterBean> loadPath()
+            MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(Constants.PATH_METHOD_NAME)// 方法名
+                    .addAnnotation(Override.class)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(methodReturns);
+
+
+            //  Map<String, RouterBean> pathMap = new HashMap<>(); 不循环部分
+            methodBuilder.addStatement("$T<$T,$T> $N=new $T<>()",
+                    ClassName.get(Map.class),
+                    ClassName.get(String.class),
+                    ClassName.get(RouterBean.class),
+                    Constants.PATH_PARAMETER_NAME,
+                    HashMap.class
+            );
+
+            //app/MainActivity , app/....
+            List<RouterBean> pathList = entry.getValue();
+            // 方法内容的循环部分
+//            pathMap.put("/app/MainActivity",
+//                    RouterBean.create(RouterBean.Type.ACTIVITY, MainActivity.class,
+//
+//                            "/app/MainActivity",
+//                            "app"
+//                    ));
+
+            for (RouterBean bean : pathList) {
+
+                methodBuilder.addStatement("$N.put($S,$T.create($T.$L,$T.class,$S,$S))",
+                        Constants.PATH_PARAMETER_NAME,  // pathMap.put
+                        bean.getPath(),    // "/app/MainActivity"
+                        ClassName.get(RouterBean.class),
+                        ClassName.get(RouterBean.Type.class),
+                        bean.getType(),   // 枚举ACTIVITY
+                        ClassName.get((TypeElement) bean.getElement()),  // MainActivity.class
+                        bean.getPath(),    // "/app/MainActivity"
+                        bean.getGroup()   // "app"
+                        );
+
+            }
+
+            // 遍历最后返回 return pathMap;
+            methodBuilder.addStatement("return $N", Constants.PATH_PARAMETER_NAME);
+
+            // 生成类文件 如: ARouter$$Path$$app
+            String finalClassName = Constants.PATH_FILE_NAME + entry.getKey();
+            messager.printMessage(Diagnostic.Kind.NOTE, " APT 生成路由Path 类文件为  : " + packageNameForAPT + "." + finalClassName);
+//
+            JavaFile.builder(packageNameForAPT,  // 包路径
+                    TypeSpec.classBuilder(finalClassName) // 类名
+                            .addSuperinterface(ClassName.get(pathLoadType)) // 实现接口
+                            .addModifiers(Modifier.PUBLIC)
+                            .addMethod(methodBuilder.build())  // 方法的构建
+                            .build()).build().writeTo(filer);  // 类构建完成
+
+        }
+
 
     }
 
@@ -187,15 +320,17 @@ public class ARouterProcessor extends AbstractProcessor {
                 tempPathMap.put(bean.getGroup(), routerBeans);
             } else {
                 // 找到key 直接加入临时集合
-                for (RouterBean routerBean : routerBeans) {
-                    if (!bean.getPath().equalsIgnoreCase(routerBean.getPath())) {
-                        routerBeans.add(bean);
-                    }
-                }
+//                for (RouterBean routerBean : routerBeans) {
+//                    if (!bean.getPath().equalsIgnoreCase(routerBean.getPath())) {
+//                        routerBeans.add(bean);
+//                    }
+//                }
+
+                routerBeans.add(bean);
             }
 
         } else {
-            messager.printMessage(Diagnostic.Kind.NOTE,"@ARouter 注解未按规范使用,如/app/MainActivity");
+            messager.printMessage(Diagnostic.Kind.NOTE, "@ARouter 注解未按规范使用,如/app/MainActivity");
         }
 
     }

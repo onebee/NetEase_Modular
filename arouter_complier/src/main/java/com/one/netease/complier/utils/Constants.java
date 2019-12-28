@@ -13,7 +13,7 @@ public class Constants {
     /**
      * 每个子模块的模块名
      */
-    public static final String MODULE_NAME = "module_name";
+    public static final String MODULE_NAME = "moduleName";
 
     /**
      * 用于存放APT 生成的类文件
@@ -31,5 +31,20 @@ public class Constants {
     // 路由组Group对应的详细Path加载接口
 
     public static final String AROUTE_PATH = BASE_PACKAGE + ".core.ARouterLoadPath";
+
+    // 路由组Group，参数名
+    public static final String GROUP_PARAMETER_NAME = "groupMap";
+    // 路由组Group，方法名
+    public static final String GROUP_METHOD_NAME = "loadGroup";
+    // 路由组Group对应的详细Path，参数名
+    public static final String PATH_PARAMETER_NAME = "pathMap";
+    // 路由组Group对应的详细Path，方法名
+    public static final String PATH_METHOD_NAME = "loadPath";
+
+
+    // APT生成的路由组Group源文件名
+    public static final String GROUP_FILE_NAME = "ARouter$$Group$$";
+    // APT生成的路由组Group对应的详细Path源文件名
+    public static final String PATH_FILE_NAME = "ARouter$$Path$$";
 
 }

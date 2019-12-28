@@ -1,7 +1,7 @@
 package com.one.netease.modular.test;
 
-import com.one.netease.core.ARouterLoadGroup;
-import com.one.netease.core.ARouterLoadPath;
+import com.one.netease.arouter.api.core.ARouterLoadGroup;
+import com.one.netease.arouter.api.core.ARouterLoadPath;
 
 import java.util.HashMap;
 import java.util.Map;
