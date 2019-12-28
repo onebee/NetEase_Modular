@@ -162,6 +162,8 @@ public class ARouterProcessor extends AbstractProcessor {
 
             // 赋值临时的map 存储以上信息,用来遍历时生成代码
             valueOfPathMap(bean);
+
+
         }
 
         // ARouterLoadGroup 和ARouterLoadPath 用来重新生成类文件,实现接口
@@ -175,12 +177,17 @@ public class ARouterProcessor extends AbstractProcessor {
         // 2. 生成 路由组 Group 类文件
         createGroupFile(groundLoadType, pathLoadType);
 
+
+
     }
 
     private void createGroupFile(TypeElement groupLoadType, TypeElement pathLoadType) throws IOException {
 
         // 判断是否有需要生成的类文件
-        if (EmptyUtils.isEmpty(tempGroupMap) || EmptyUtils.isEmpty(tempPathMap)) return;
+        if (EmptyUtils.isEmpty(tempGroupMap) || EmptyUtils.isEmpty(tempPathMap)) {
+            messager.printMessage(Diagnostic.Kind.NOTE," 生成Group 文件 :tempGroupMap = "+ tempGroupMap+" ,  tempPathMap:"+tempPathMap);
+            return;
+        }
 
         TypeName methodReturns = ParameterizedTypeName.get(
                 ClassName.get(Map.class), // Map
@@ -303,7 +310,12 @@ public class ARouterProcessor extends AbstractProcessor {
                             .addMethod(methodBuilder.build())  // 方法的构建
                             .build()).build().writeTo(filer);  // 类构建完成
 
+            // 非常重要一步！！！！！路径文件生成出来了，才能赋值路由组tempGroupMap
+            tempGroupMap.put(entry.getKey(), finalClassName);
+
         }
+
+
 
 
     }

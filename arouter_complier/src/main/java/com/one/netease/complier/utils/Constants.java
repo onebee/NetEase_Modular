@@ -29,7 +29,6 @@ public class Constants {
 
     public static final String AROUTE_GROUP = BASE_PACKAGE + ".core.ARouterLoadGroup";
     // 路由组Group对应的详细Path加载接口
-
     public static final String AROUTE_PATH = BASE_PACKAGE + ".core.ARouterLoadPath";
 
     // 路由组Group，参数名

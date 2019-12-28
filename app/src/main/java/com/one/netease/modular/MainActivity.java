@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 //            // 获取personal/Personal_MainActivity 对象
 //            RouterBean routerBean = pathMap.get("/order/Order_MainActivity");
 //            if (routerBean != null) {
-//                Intent intent = new Intent(this, routerBean.getClazz());
-//                intent.putExtra("name", "onebit");
+//                Intent intent1 = new Intent(this, routerBean.getClazz());
+//                intent1.putExtra("name", "onebit");
 //                startActivity(intent);
 //
 //            }
