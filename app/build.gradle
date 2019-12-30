@@ -22,8 +22,7 @@ android {
         // 切记：不能在android根节点，只能在defaultConfig或buildTypes节点下
         buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
 
-
-        multiDexEnabled false
+//        multiDexEnabled true
 
         // 在gradle 文件中配置选项参数值,用于APT传参接收,必须写在defaultConfig 下面
         javaCompileOptions {
@@ -59,9 +58,9 @@ dependencies {
 
     implementation project(':arouter_annotation')
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     annotationProcessor project(':arouter_complier')
 }
