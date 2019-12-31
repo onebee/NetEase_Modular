@@ -18,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 @ARouter(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
+
+    String name;
+    int age;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

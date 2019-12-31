@@ -9,6 +9,7 @@ public class Constants {
      * 注解处理器支持的注解类型
      */
     public static final String AROUTER_ANNOTATION_TYPES = "com.one.netease.annotation.ARouter";
+    public static final String PARAMETER_ANNOTATION_TYPES = "com.one.netease.annotation.Parameter";
 
     /**
      * 每个子模块的模块名
