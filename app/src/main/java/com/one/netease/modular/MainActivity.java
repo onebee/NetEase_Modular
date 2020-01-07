@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.one.netease.annotation.ARouter;
+import com.one.netease.annotation.Parameter;
 import com.one.netease.annotation.model.RouterBean;
 import com.one.netease.arouter.api.core.ARouterLoadGroup;
 import com.one.netease.arouter.api.core.ARouterLoadPath;
@@ -19,13 +20,18 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
 
+    @Parameter
     String name;
+
+    @Parameter(name = "agex")
     int age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        name = getIntent().getStringExtra("name");
+        age = getIntent().getIntExtra("agex", age);
     }
 
     public void jumpOrder(View view) {
@@ -44,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
             Map<String, RouterBean> pathMap = path.loadPath();
             // 获取personal/Personal_MainActivity 对象
-            RouterBean routerBean = pathMap.get("/order/Order2_MainActivity");
+            RouterBean routerBean = pathMap.get("/order/Order_MainActivity");
             if (routerBean != null) {
                 Intent intent1 = new Intent(this, routerBean.getClazz());
                 intent1.putExtra("name", "onebit");
+                intent1.putExtra("agex", 30);
                 startActivity(intent1);
 
             }

@@ -23,6 +23,7 @@ public class Constants {
 
     // Activity全类名
     public static final String ACTIVITY = "android.app.Activity";
+    public static final String PARAMETER_NAMR = "target";
 
     // 包名前缀封装
     static final String BASE_PACKAGE = "com.one.netease.arouter.api";
@@ -46,5 +47,17 @@ public class Constants {
     public static final String GROUP_FILE_NAME = "ARouter$$Group$$";
     // APT生成的路由组Group对应的详细Path源文件名
     public static final String PATH_FILE_NAME = "ARouter$$Path$$";
+
+    // 获取参数 加载接口
+    public static final String PARAMETER_LOAD = BASE_PACKAGE + ".core.ParameterLoad";
+
+    // APT生成的获取参数类文件名
+    public static final String PARAMETER_FILE_NAME = "$$Parameter";
+
+    // 获取参数，参数名
+    public static final String PARAMETER_METHOD_NAME = "loadParameter";
+
+    // String全类名
+    public static final String STRING = "java.lang.String";
 
 }

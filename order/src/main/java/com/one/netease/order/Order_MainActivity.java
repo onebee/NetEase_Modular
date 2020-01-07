@@ -5,10 +5,19 @@ import android.util.Log;
 import android.view.View;
 
 import com.one.netease.annotation.ARouter;
+import com.one.netease.annotation.Parameter;
+import com.one.netease.arouter.api.core.ParameterLoad;
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
 @ARouter(path = "/order/Order_MainActivity")
 public class Order_MainActivity extends BaseActivity {
+
+    @Parameter
+    String name;
+
+    @Parameter(name = "agex")
+    int age=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +25,13 @@ public class Order_MainActivity extends BaseActivity {
         setContentView(R.layout.order_activity_main);
         Log.i(Cons.TAG,"order >> Order_main_activity");
 
+
+        ParameterLoad parameterLoad = new Order_MainActivity$$Parameter();
+        parameterLoad.loadParameter(this);
         if (getIntent() != null) {
 
-            Log.e(Cons.TAG, getIntent().getStringExtra("name"));
+            Log.e(Cons.TAG, "name >>> "+name + " // age >>>"+ age);
+
         }
     }
 

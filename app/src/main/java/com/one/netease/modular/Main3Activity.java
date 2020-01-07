@@ -6,18 +6,18 @@ import com.one.netease.annotation.ARouter;
 import com.one.netease.annotation.Parameter;
 
 import androidx.appcompat.app.AppCompatActivity;
-@ARouter(path = "/app/Main2Activity")
-public class Main2Activity extends AppCompatActivity {
+@ARouter(path = "/app/Main3Activity")
+public class Main3Activity extends AppCompatActivity {
 
     @Parameter
-    String username;
+    String password;
 
     @Parameter
-    boolean success;
+    int gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main3);
     }
 }
