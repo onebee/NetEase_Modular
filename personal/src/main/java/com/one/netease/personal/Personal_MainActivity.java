@@ -20,34 +20,12 @@ public class Personal_MainActivity extends BaseActivity {
 
 
     public void jumpApp(View view) throws ClassNotFoundException {
-//        Class targetClass = Class.forName("com.one.netease.modular.MainActivity");
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
-//        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
-//        if (targetClass == null) {
-//            Log.e(Cons.TAG,"targetClass 为空");
-//        }
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
+
 
     }
 
     public void jumpOrder(View view) throws ClassNotFoundException {
 
-//        Class targetClass = Class.forName("com.one.netease.order.Order_MainActivity");
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
-
-//        Class<?> targetClass = RecordPathManager.getTargetClass("order", "Order_MainActivity");
-//        if (targetClass == null) {
-//            Log.e(Cons.TAG,"targetClass 为空");
-//        }
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
     }
 
 }

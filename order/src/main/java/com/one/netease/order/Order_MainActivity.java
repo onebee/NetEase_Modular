@@ -5,18 +5,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.one.netease.annotation.ARouter;
-import com.one.netease.annotation.Parameter;
-import com.one.netease.arouter.api.core.ParameterLoad;
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
 @ARouter(path = "/order/Order_MainActivity")
 public class Order_MainActivity extends BaseActivity {
-
-    @Parameter
-    String name;
-
-    @Parameter(name = "agex")
-    int age=1;
 
 
     @Override
@@ -26,44 +18,14 @@ public class Order_MainActivity extends BaseActivity {
         Log.i(Cons.TAG,"order >> Order_main_activity");
 
 
-        ParameterLoad parameterLoad = new Order_MainActivity$$Parameter();
-        parameterLoad.loadParameter(this);
-        if (getIntent() != null) {
-
-            Log.e(Cons.TAG, "name >>> "+name + " // age >>>"+ age);
-
-        }
     }
 
     public void jumpApp(View view) throws ClassNotFoundException {
-//        // 类加载方式
-//        Class targetClass = Class.forName("com.one.netease.modular.MainActivity");
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
 
-//        Class<?> targetClass = RecordPathManager.getTargetClass("app", "MainActivity");
-//        if (targetClass == null) {
-//            Log.e(Cons.TAG,"targetClass 为空");
-//        }
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
     }
 
     public void jumpPersonal(View view) throws ClassNotFoundException {
 
-//        Class targetClass = Class.forName("com.one.netease.personal.Personal_MainActivity");
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
 
-//        Class<?> targetClass = RecordPathManager.getTargetClass("personal", "Personal_MainActivity");
-//        if (targetClass == null) {
-//            Log.e(Cons.TAG,"targetClass 为空");
-//        }
-//        Intent intent = new Intent(this, targetClass);
-//        intent.putExtra("name","onebit");
-//        startActivity(intent);
     }
 }
