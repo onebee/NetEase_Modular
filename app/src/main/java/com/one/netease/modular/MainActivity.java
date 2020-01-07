@@ -1,9 +1,11 @@
 package com.one.netease.modular;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.one.netease.annotation.ARouter;
+import com.one.netease.order.Order_MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void jumpOrder(View view) {
+
+        Intent intent = new Intent(this, Order_MainActivity.class);
+        intent.putExtra("name", "onebit");
+        startActivity(intent);
 
     }
 
