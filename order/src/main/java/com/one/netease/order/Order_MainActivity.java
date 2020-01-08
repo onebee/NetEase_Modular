@@ -34,7 +34,7 @@ public class Order_MainActivity extends BaseActivity {
     public void jumpApp(View view) throws ClassNotFoundException {
         RouterManager.getInstance()
                 .build("/app/MainActivity")
-                .withResultString("call","i'm come back")
+                .withResultString("call","i'm come back 哈哈哈哈或")
                 .navigation(this);
     }
 

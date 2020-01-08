@@ -25,8 +25,11 @@ public class Constants {
     public static final String ACTIVITY = "android.app.Activity";
     public static final String PARAMETER_NAMR = "target";
 
+
+
+
     // 包名前缀封装
-    static final String BASE_PACKAGE = "com.one.netease.arouter.api";
+    public static final String BASE_PACKAGE = "com.one.netease.arouter.api";
     // 路由组Group加载接口
 
     public static final String AROUTE_GROUP = BASE_PACKAGE + ".core.ARouterLoadGroup";
@@ -60,4 +63,10 @@ public class Constants {
     // String全类名
     public static final String STRING = "java.lang.String";
 
+    // 跨模块业务,回调接口
+    public static final String CALL = BASE_PACKAGE  +".core.Call";
+    // 包名前缀封装
+
+    // RouterManager类名
+    public static final String ROUTER_MANAGER = "RouterManager";
 }

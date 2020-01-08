@@ -135,9 +135,11 @@ public class ARouterProcessor extends AbstractProcessor {
 
         // 获取Activity Call back 类型
         TypeElement activityType = elementUtils.getTypeElement(Constants.ACTIVITY);
+        TypeElement callType = elementUtils.getTypeElement(Constants.CALL);
 
 //        // 显示类信息(获取被注解节点,类节点) 这里也叫字描述 Mirror
         TypeMirror activityMirror = activityType.asType();
+        TypeMirror callMirror = callType.asType();
 
         for (Element element : elements) {
             TypeMirror elementType = element.asType();

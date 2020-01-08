@@ -6,12 +6,15 @@ import com.one.netease.complier.utils.EmptyUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 /**
@@ -25,6 +28,13 @@ public class ParameterFactory {
     // 方法体构建
     private MethodSpec.Builder methodBuidler;
 
+
+    // type 类信息工具类, 包含用于操作TypeMirror 的工具方法
+    private Types typeUtils;
+
+    // 获取元素接口信息(生成类文件需要的接口实现)
+    private TypeMirror callMirror;
+
     // Messager用来报告错误，警告和其他提示信息
     private Messager messager;
 
@@ -34,6 +44,12 @@ public class ParameterFactory {
     private ParameterFactory(Builder builder) {
         this.messager = builder.messager;
         this.className = builder.className;
+
+        this.typeUtils = builder.typeUtils;
+
+        this.callMirror = builder.elementUtils
+                .getTypeElement(Constants.CALL)
+                .asType();
 
         // 通过方法参数体构建方法体：public void loadParameter(Object target) {
         methodBuidler = MethodSpec.methodBuilder(Constants.PARAMETER_METHOD_NAME)
@@ -86,6 +102,16 @@ public class ParameterFactory {
             // t.s = t.getIntent.getStringExtra("s");
             if (typeMirror.toString().equalsIgnoreCase(Constants.STRING)) {
                 methodContent += "getStringExtra($S)";
+            } else if (typeUtils.isSubtype(typeMirror, callMirror)) {
+                // t.iUser = (IUserImpl) RouterManager.getInstance().build("/order/getUserInfo").navigation(t);
+
+                methodContent = "t." + fieldName + " = ($T) $T.genInstance().build($S).navigation(t)";
+                methodBuidler.addStatement(methodContent,
+                        TypeName.get(typeMirror),
+                        ClassName.get(Constants.BASE_PACKAGE, Constants.ROUTER_MANAGER),
+                        annotationValue
+                );
+                return;
             }
         }
 
@@ -109,6 +135,10 @@ public class ParameterFactory {
         // 方法参数体
         private ParameterSpec parameterSpec;
 
+        private Elements elementUtils;
+
+        private Types typeUtils;
+
         public Builder(ParameterSpec parameterSpec) {
             this.parameterSpec = parameterSpec;
         }
@@ -120,6 +150,16 @@ public class ParameterFactory {
 
         public Builder setClassName(ClassName className) {
             this.className = className;
+            return this;
+        }
+
+        public Builder setElementUtils(Elements elementUtils) {
+            this.elementUtils = elementUtils;
+            return this;
+        }
+
+        public Builder setTypeUtils(Types typeUtils) {
+            this.typeUtils = typeUtils;
             return this;
         }
 
@@ -138,5 +178,7 @@ public class ParameterFactory {
 
             return new ParameterFactory(this);
         }
+
+
     }
 }
