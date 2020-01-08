@@ -7,6 +7,7 @@ import android.view.View;
 import com.one.netease.annotation.ARouter;
 import com.one.netease.annotation.Parameter;
 import com.one.netease.arouter.api.ParameterManager;
+import com.one.netease.arouter.api.RouterManager;
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
 @ARouter(path = "/order/Order_MainActivity")
@@ -35,6 +36,10 @@ public class Order_MainActivity extends BaseActivity {
 
     public void jumpPersonal(View view) throws ClassNotFoundException {
 
+        RouterManager.getInstance()
+                .build("/personal/Personal_MainActivity")
+                .withString("name","onebit")
+                .navigation(this);
 
     }
 }
