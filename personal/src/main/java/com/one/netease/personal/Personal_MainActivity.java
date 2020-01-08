@@ -22,7 +22,7 @@ public class Personal_MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_activity_main);
-        Log.i(Cons.TAG,"order >> Personal_main_activity");
+        Log.i(Cons.TAG,"personal >> Personal_main_activity");
 
         ParameterManager.getInstance().loadParameter(this);
         Log.i(Cons.TAG, " personal 接收参数值: " + name);
@@ -31,17 +31,17 @@ public class Personal_MainActivity extends BaseActivity {
 
     public void jumpApp(View view) throws ClassNotFoundException {
         RouterManager.getInstance()
-                .build("/personal/Personal_MainActivity")
-                .withString("name","onebit")
+                .build("/app/MainActivity")
+                .withResultString("name","i'm come back")
                 .navigation(this);
 
     }
 
     public void jumpOrder(View view) throws ClassNotFoundException {
         RouterManager.getInstance()
-                .build("/personal/Personal_MainActivity")
-                .withResultString("name","onebit")
-                .navigation(this,155);
+                .build("/order/Order_MainActivity")
+                .withString("name","onebit")
+                .navigation(this);
     }
 
 }
