@@ -1,10 +1,13 @@
 package com.one.netease.arouter.api;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.LruCache;
 
+import com.one.netease.annotation.model.RouterBean;
 import com.one.netease.arouter.api.core.ARouterLoadGroup;
 import com.one.netease.arouter.api.core.ARouterLoadPath;
 
@@ -79,14 +82,14 @@ public class RouterManager {
 
     /**
      * @param context
-     * @param manager
-     * @param i
+     * @param
+     * @param
      * @return
      */
-    public Object navigation(Context context, BundleManager manager, int i) {
+    public Object navigation(Context context, BundleManager bundleManager, int code) {
 
         //ARouter$$Group$$order
-        String groupClassName = context.getPackageManager() + ".apt." + GROUP_FILE_PREFIX_NAME + group;
+        String groupClassName = context.getPackageName() + ".apt." + GROUP_FILE_PREFIX_NAME + group;
 
         Log.i("netease >>>", groupClassName);
 
@@ -96,7 +99,6 @@ public class RouterManager {
             if (groupLoad == null) {
 
                 // 加载APT 路由组Group 类文件ARouter$$Group$$personal
-
                 Class<?> clazz = Class.forName(groupClassName);
                 // 初始化类文件
                 groupLoad = (ARouterLoadGroup) clazz.newInstance();
@@ -105,21 +107,55 @@ public class RouterManager {
             }
 
             if (groupLoad.loadGroup().isEmpty()) {
-                throw new RuntimeException("路由表加载失败");
+                throw new RuntimeException("路由表Group加载失败");
             }
 
             // 读取路由path 路径类文件缓存
-            ARouterLoadPath pathLoad = pathLruCache.get(this.path);
+            ARouterLoadPath pathLoad = pathLruCache.get(path);
             if (pathLoad == null) {
 
                 // 通过组名Group 加载接口,获取Path 加载接口
                 Class<? extends ARouterLoadPath> clazz = groupLoad.loadGroup().get(group);
+                // 初始化 ARouter$$Path$$personal
                 if (clazz != null)
                     pathLoad = clazz.newInstance();
 
                 if (pathLoad != null) {
-                    pathLruCache.put(group, pathLoad);
+                    pathLruCache.put(path, pathLoad);
                 }
+            }
+
+            if (pathLoad != null) {
+                if (pathLoad.loadPath().isEmpty()) {
+                    throw new RuntimeException("路由表路径加载失败!");
+                }
+
+                RouterBean routerBean = pathLoad.loadPath().get(path);
+
+                if (routerBean != null) {
+                    // 类型判断,方便拖拽
+                    switch (routerBean.getType()) {
+                        case ACTIVITY:
+
+                            Intent intent = new Intent(context, routerBean.getClazz());
+                            intent.putExtras(bundleManager.getBundle());
+                            // 注意: startActivityForResult --> setResult
+                            if (bundleManager.isResult()) {
+                                ((Activity) context).setResult(code, intent);
+                                ((Activity) context).finish();
+                            }
+                            if (code > 0) {//跳转的时候需要回调
+                                ((Activity) context).startActivityForResult(intent, code, bundleManager.getBundle());
+
+                            } else {
+                                context.startActivity(intent, bundleManager.getBundle());
+                            }
+                            break;
+
+
+                    }
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,3 +164,5 @@ public class RouterManager {
         return null;
     }
 }
+
+//接口持有接口的引用

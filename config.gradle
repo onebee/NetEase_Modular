@@ -31,9 +31,9 @@ ext {
     ]
 
     appId = [
-            "app"     : "com.one.netease.module",
-            "order"   : "com.one.netease.module.order",
-            "personal": "com.one.netease.module.personal"
+            "app"     : "com.one.netease.modular",
+            "order"   : "com.one.netease.modular.order",
+            "personal": "com.one.netease.modular.personal"
     ]
 
     url = [

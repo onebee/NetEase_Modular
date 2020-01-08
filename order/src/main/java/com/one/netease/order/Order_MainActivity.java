@@ -1,5 +1,6 @@
 package com.one.netease.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,9 @@ import com.one.netease.arouter.api.ParameterManager;
 import com.one.netease.arouter.api.RouterManager;
 import com.one.netease.common.base.BaseActivity;
 import com.one.netease.common.utils.Cons;
+
+import androidx.annotation.Nullable;
+
 @ARouter(path = "/order/Order_MainActivity")
 public class Order_MainActivity extends BaseActivity {
 
@@ -31,15 +35,27 @@ public class Order_MainActivity extends BaseActivity {
     }
 
     public void jumpApp(View view) throws ClassNotFoundException {
-
+        RouterManager.getInstance()
+                .build("/personal/Personal_MainActivity")
+                .withString("name","onebit")
+                .navigation(this);
     }
 
     public void jumpPersonal(View view) throws ClassNotFoundException {
 
         RouterManager.getInstance()
                 .build("/personal/Personal_MainActivity")
-                .withString("name","onebit")
-                .navigation(this);
+                .withResultString("name","onebit")
+                .navigation(this,163);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null) {
+            Log.i(Cons.TAG, "Order 回调onActivityResult : " + data.getStringExtra("call"));
+        }
     }
 }

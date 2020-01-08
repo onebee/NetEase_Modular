@@ -22,7 +22,6 @@ public class ParameterManager {
     /**
      * 单例
      */
-
     public static ParameterManager getInstance() {
         if (instance == null) {
             synchronized (ParameterManager.class) {
