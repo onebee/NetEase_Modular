@@ -105,7 +105,7 @@ public class ParameterFactory {
             } else if (typeUtils.isSubtype(typeMirror, callMirror)) {
                 // t.iUser = (IUserImpl) RouterManager.getInstance().build("/order/getUserInfo").navigation(t);
 
-                methodContent = "t." + fieldName + " = ($T) $T.genInstance().build($S).navigation(t)";
+                methodContent = "t." + fieldName + " = ($T) $T.getInstance().build($S).navigation(t)";
                 methodBuidler.addStatement(methodContent,
                         TypeName.get(typeMirror),
                         ClassName.get(Constants.BASE_PACKAGE, Constants.ROUTER_MANAGER),

@@ -158,6 +158,9 @@ public class ARouterProcessor extends AbstractProcessor {
             // 高级判断, @ARouter 注解只能用于类上,并且是规定的Activity
             if (typeUtils.isSubtype(elementType, activityMirror)) {
                 bean.setType(RouterBean.Type.ACTIVITY);
+            } else if (typeUtils.isSubtype(elementType, callMirror)) {
+                bean.setType(RouterBean.Type.CALL);
+
             } else {
                 throw new RuntimeException("@ARouter 注解目前仅限于用于Activity 之上");
             }

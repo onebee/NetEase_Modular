@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.one.netease.annotation.ARouter;
+import com.one.netease.annotation.Parameter;
 import com.one.netease.arouter.api.RouterManager;
+import com.one.netease.common.order.OrderDrawable;
 import com.one.netease.common.utils.Cons;
 
 import androidx.annotation.Nullable;
@@ -15,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 @ARouter(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
+
+
+    @Parameter(name = "/order/getDrawable")
+    OrderDrawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
             Log.i(Cons.TAG," 当前为: 组件化模式,app/order/personal 子模块可以独立运行");
 
         }
+
+        ImageView imageView = findViewById(R.id.iv);
+        imageView.setImageResource(drawable.getDrawable());
 
 
     }
