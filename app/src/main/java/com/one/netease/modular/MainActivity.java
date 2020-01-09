@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.one.netease.annotation.ARouter;
 import com.one.netease.annotation.Parameter;
+import com.one.netease.arouter.api.ParameterManager;
 import com.one.netease.arouter.api.RouterManager;
 import com.one.netease.common.order.OrderDrawable;
 import com.one.netease.common.utils.Cons;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+        ParameterManager.getInstance().loadParameter(this);
         ImageView imageView = findViewById(R.id.iv);
         imageView.setImageResource(drawable.getDrawable());
 
