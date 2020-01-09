@@ -1,6 +1,7 @@
 package com.one.netease.modular;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,5 +24,17 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("com.one.netease.modular", appContext.getPackageName());
+    }
+
+    @Test
+    public void hah() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+
+        Class<?> clazz = Class.forName("com.one.netease.modular.MainActivity");
+        Log.i(">>>", clazz.getName() + "   ----  " + clazz);
+//        MainActivity main = (MainActivity) clazz.newInstance();
+//
+//        main.setHa();
+
     }
 }

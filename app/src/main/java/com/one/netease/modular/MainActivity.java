@@ -70,4 +70,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void setHa() {
+        System.out.println("hhhhaaaa ");
+    }
 }
