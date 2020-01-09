@@ -93,7 +93,7 @@ public class ARouterProcessor extends AbstractProcessor {
             moduleName = options.get(Constants.MODULE_NAME);
             packageNameForAPT = options.get(Constants.APT_PACKAGE);
             // 有坑：Diagnostic.Kind.ERROR，异常会自动结束，不像安卓中Log.e
-            messager.printMessage(Diagnostic.Kind.NOTE, "moduleName >>> " + moduleName);
+            messager.printMessage(Diagnostic.Kind.NOTE, "工程名 : moduleName >>> " + moduleName);
             messager.printMessage(Diagnostic.Kind.NOTE, "packageNameForAPT >>> " + packageNameForAPT);
         }
 
