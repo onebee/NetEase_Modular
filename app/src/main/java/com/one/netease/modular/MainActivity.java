@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (BuildConfig.isRelease) {
+        if (BuildConfig.isModularization) {
 
             Log.i(Cons.TAG," 当前为: 集成化模式,除app 可以运行,其他子模块都是Android Library");
         } else {

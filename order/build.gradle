@@ -1,4 +1,4 @@
-if (isRelease) {
+if (isModularization) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -13,7 +13,7 @@ android {
     compileSdkVersion androidId.compileSdkVersion
     buildToolsVersion androidId.buildToolsVersion
     defaultConfig {
-        if (!isRelease) {
+        if (!isModularization) {
             applicationId appId.order
         }
 
@@ -27,7 +27,7 @@ android {
         // 这个方法接收三个非空的参数，第一个：确定值的类型，第二个：指定key的名字，第三个：传值（必须是String）
         // 为什么需要定义这个？因为src代码中有可能需要用到跨模块交互，如果是组件化模块显然不行
         // 切记：不能在android根节点，只能在defaultConfig或buildTypes节点下
-        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+        buildConfigField("boolean", "isModularization", String.valueOf(isModularization))
 
         // 在gradle 文件中配置选项参数值,用于APT传参接收,必须写在defaultConfig 下面
         javaCompileOptions {
@@ -47,7 +47,7 @@ android {
     sourceSets {
         main {
 
-            if (!isRelease) {
+            if (!isModularization) {
                 // 如果是组件化模式,需要单独运行时
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
 //                java.srcDirs = ['src/main/java']

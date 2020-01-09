@@ -20,7 +20,7 @@ android {
         // 这个方法接收三个非空的参数，第一个：确定值的类型，第二个：指定key的名字，第三个：传值（必须是String）
         // 为什么需要定义这个？因为src代码中有可能需要用到跨模块交互，如果是组件化模块显然不行
         // 切记：不能在android根节点，只能在defaultConfig或buildTypes节点下
-        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+        buildConfigField("boolean", "isModularization", String.valueOf(isModularization))
 
 //        multiDexEnabled true
 
@@ -51,7 +51,7 @@ dependencies {
     implementation project(':common') // 公共基础库
 
     // 如果是集成化模式，做发布版本时。各个模块都不能独立运行了
-    if (isRelease) {
+    if (isModularization) {
         implementation project(':order')
         implementation project(':personal')
     }
